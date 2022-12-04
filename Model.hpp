@@ -2,6 +2,7 @@
 #define MODEL_HPP
 
 #include <iostream>
+#include <vector>
 #include <glm/glm.hpp>
 #include <glad/glad.h>
 #include "BBox.hpp"
@@ -20,6 +21,7 @@ public:
     
     Model(const std::string &path);
     Model(const Model &) = delete;
+    Model(const std::vector<float> &vertices, const std::vector<unsigned int> &indices);
     Model(Model &&) = delete;
 
     ~Model();

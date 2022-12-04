@@ -45,6 +45,54 @@ Model::Model(const std::string &path) :
     // std::cout << "OpenGL error? " << glGetError() << std::endl;
 }
 
+Model::Model(const std::vector<float> &vertices, const std::vector<unsigned int> &indices) : valid(false),
+    VAO(GL_NONE),
+    VBO(GL_NONE),
+    num_vertices(0)
+{
+    std::vector<glm::vec3> data;
+
+    if (indices.size() % 3 != 0)
+    {
+        std::cerr << "Incorrect amount of indices? Indices must be moddable by 3." << std::endl;
+        return;
+    }
+
+    for (int i = 0; i < indices.size(); i += 3)
+    {
+        int i0 = indices[i + 0];
+        int i1 = indices[i + 1];
+        int i2 = indices[i + 2];
+
+        glm::vec3 a = glm::vec3(vertices[i0 * 3 + 0], vertices[i0 * 3 + 1], vertices[i0 * 3 + 2]);
+        glm::vec3 b = glm::vec3(vertices[i1 * 3 + 0], vertices[i1 * 3 + 1], vertices[i1 * 3 + 2]);
+        glm::vec3 c = glm::vec3(vertices[i2 * 3 + 0], vertices[i2 * 3 + 1], vertices[i2 * 3 + 2]);
+        
+        bounding_box.enclose(a);
+        bounding_box.enclose(b);
+        bounding_box.enclose(c);
+
+        data.insert(data.end(), 
+        {
+            a, b, c
+        });
+
+        num_vertices += 3;
+    }
+
+    // Initialize OpenGL stuffs
+    glGenVertexArrays(1, &VAO);
+    glGenBuffers(1, &VBO);
+    glBindVertexArray(VAO);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+
+    glBufferData(GL_ARRAY_BUFFER, data.size() * sizeof(glm::vec3), data.data(), GL_STATIC_DRAW);
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, nullptr);
+
+    valid = true;
+}
+
 Model::~Model()
 {
     if (valid)

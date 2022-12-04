@@ -65,7 +65,7 @@ int main(int argc, char *argv[])
     {
         try
         {
-            Processor processor(path);
+            Processor processor(false, path);
             processor.process(format);
         }
         catch (const std::exception &)

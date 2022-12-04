@@ -14,3 +14,16 @@ target_include_directories(mesh2depth PUBLIC
     glfw
     glm::glm
     deps/glad/include)
+
+add_library(libmesh2depth deps/glad/src/glad.c Model.cpp stb_image_write.c)
+target_link_libraries(libmesh2depth PUBLIC
+    glfw
+    glm::glm)
+target_include_directories(libmesh2depth PUBLIC
+    glfw
+    glm::glm
+    deps/glad/include)
+
+add_executable(m2d_test offline_test.cpp)
+target_link_libraries(m2d_test PUBLIC
+    libmesh2depth)

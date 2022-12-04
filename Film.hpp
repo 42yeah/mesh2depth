@@ -6,6 +6,7 @@
 #include <fstream>
 #include <glad/glad.h>
 #include "Shader.hpp"
+#include "Model.hpp"
 #include "stb_image_write.h"
 
 class Film

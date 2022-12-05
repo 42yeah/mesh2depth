@@ -8,8 +8,9 @@
 #include "Shader.hpp"
 #include "Model.hpp"
 #include "stb_image_write.h"
+#include "utils.hpp"
 
-class Film
+class MESH2DEPTH_API Film
 {
 public:
     Film(int width, int height) : valid(false),
@@ -81,19 +82,7 @@ public:
         glDrawArrays(GL_TRIANGLES, 0, model.num_vertices);
     }
 
-    bool save(const std::string &path) const
-    {
-        stbi_flip_vertically_on_write(true);
-
-        unsigned char *data = new unsigned char[width * height * 3];
-
-        glBindTexture(GL_TEXTURE_2D, texture_gl);
-        glGetTexImage(GL_TEXTURE_2D, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-        bool success = stbi_write_jpg(path.c_str(), width, height, 3, data, 100);
-
-        delete[] data;
-        return success;
-    }
+    bool save(const std::string &path) const;
 
     bool save_csv(const std::string &path) const
     {

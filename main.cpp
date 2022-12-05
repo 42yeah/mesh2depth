@@ -1,11 +1,11 @@
 #include <iostream>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include "Model.hpp"
-#include "Shader.hpp"
-#include "Camera.hpp"
-#include "Film.hpp"
-#include "Processor.hpp"
+#include "include/Model.hpp"
+#include "include/Shader.hpp"
+#include "include/Camera.hpp"
+#include "include/Film.hpp"
+#include "include/Processor.hpp"
 
 
 int main(int argc, char *argv[])

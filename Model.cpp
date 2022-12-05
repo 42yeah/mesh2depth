@@ -1,9 +1,9 @@
-#include "Model.hpp"
+#include "include/Model.hpp"
 #define TINYOBJLOADER_IMPLEMENTATION
 #include "deps/tiny_obj_loader.h"
 #include <vector>
 #include <cassert>
-#include "utils.hpp"
+#include "include/utils.hpp"
 
 
 Model::Model(const std::string &path) : 
@@ -64,10 +64,16 @@ Model::Model(const std::vector<float> &vertices, const std::vector<unsigned int>
         int i1 = indices[i + 1];
         int i2 = indices[i + 2];
 
+        if (i0 < 0 || i1 < 0 || i2 < 0 || i0 >= vertices.size() || i1 >= indices.size() || i2 >= indices.size())
+        {
+            std::cerr << "Invalid indices encountered when creating model?" << std::endl;
+            return;
+        }
+
         glm::vec3 a = glm::vec3(vertices[i0 * 3 + 0], vertices[i0 * 3 + 1], vertices[i0 * 3 + 2]);
         glm::vec3 b = glm::vec3(vertices[i1 * 3 + 0], vertices[i1 * 3 + 1], vertices[i1 * 3 + 2]);
         glm::vec3 c = glm::vec3(vertices[i2 * 3 + 0], vertices[i2 * 3 + 1], vertices[i2 * 3 + 2]);
-        
+
         bounding_box.enclose(a);
         bounding_box.enclose(b);
         bounding_box.enclose(c);

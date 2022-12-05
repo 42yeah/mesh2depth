@@ -6,6 +6,10 @@
 #include <sstream>
 #include <glm/glm.hpp>
 
+#ifndef MESH2DEPTH_API
+#define MESH2DEPTH_API __declspec(dllexport)
+#endif
+
 inline std::ostream &operator<<(std::ostream &a, const glm::vec3 &p) 
 {
     return a << "(" << p.x << ", " << p.y << ", " << p.z << ")";

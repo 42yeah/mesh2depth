@@ -7,6 +7,7 @@
 #include <glad/glad.h>
 #include "BBox.hpp"
 #include "deps/tiny_obj_loader.h"
+#include "utils.hpp"
 
 class Camera;
 class Film;
